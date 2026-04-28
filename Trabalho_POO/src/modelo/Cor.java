@@ -3,8 +3,8 @@ package modelo;
 public class Cor {
 
     // atributos
-    private static final Cor BRANCA = new Cor("BRANCA");
-    private static final Cor PRETA = new Cor("PRETA");
+    public static final Cor BRANCA = new Cor("BRANCA");
+    public static final Cor PRETA = new Cor("PRETA");
     private String nome;
 
     // construtor
@@ -23,7 +23,7 @@ public class Cor {
         if (this == BRANCA) {
             return PRETA;
         } else {
-            return PRETA;
+            return BRANCA;
         }
     }
 }

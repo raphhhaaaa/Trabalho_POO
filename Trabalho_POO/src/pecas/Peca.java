@@ -2,6 +2,7 @@ package pecas;
 
 import modelo.Cor;
 import tabuleiro.Posicao;
+import tabuleiro.Tabuleiro;
 
 public class Peca {
 
@@ -30,5 +31,37 @@ public class Peca {
 
     // metodos auxiliares
 
-    public boolean validaMovimento(Posicao posicao) {}
+    public String getLetra() {
+        return "?";
+    }
+
+    public String getDesenho() {
+        if (cor == Cor.BRANCA) {
+            return getLetra();
+        } else {
+            return getLetra().toLowerCase();
+        }
+    }
+
+    public boolean[][] movimentosValidos(Tabuleiro tabuleiro) {
+        return new boolean[8][8];
+    }
+
+    public boolean validaMovimento(Tabuleiro tabuleiro, Posicao posicao) {
+        boolean[][] movimentos = movimentosValidos(tabuleiro);
+        return movimentos[posicao.getLinha()][posicao.getColuna()];
+    }
+
+    public boolean podeMover(Tabuleiro tabuleiro, int linha, int coluna) {
+        if (!tabuleiro.posicaoValida(linha, coluna)) {
+            return false;
+        }
+
+        Peca outra = tabuleiro.getPeca(linha, coluna);
+        if (outra == null) {
+            return true;
+        }
+
+        return outra.getCor() != cor;
+    }
 }

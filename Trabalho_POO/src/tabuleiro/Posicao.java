@@ -29,5 +29,7 @@ public class Posicao {
         this.coluna = coluna;
     }
 
-    
+    public boolean igual(Posicao outra) {
+        return linha == outra.getLinha() && coluna == outra.getColuna();
+    }
 }
