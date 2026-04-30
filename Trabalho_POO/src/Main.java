@@ -60,7 +60,18 @@ public class Main {
                                 System.out.println("Peca comida: " + comida.getDesenho());
                             }
 
-                            vez = vez.oposta();
+                            // VERIFICAÇÃO DE CHEQUE E CHEQUE-MATE
+                            if (tabuleiro.estaEmChequeMate(vez.oposta())) {
+                                tabuleiro.mostrarTabuleiro();
+                                System.out.println("CHEQUE-MATE! Vitoria das pecas da cor " + vez.getNome());
+                                jogando = false; // encerra while
+                            } else if (tabuleiro.estaEmCheque(vez.oposta())) {
+                                System.out.println("CHEQUE! O Rei oponente está sob ataque.");
+                            }
+
+                            if (jogando) {
+                                vez = vez.oposta();
+                            }
                         } else {
                             System.out.println("Movimento invalido.");
                         }
