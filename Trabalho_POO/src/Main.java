@@ -1,8 +1,8 @@
-import modelo.Cor;
-import pecas.Peca;
-import tabuleiro.Movimento;
-import tabuleiro.Posicao;
-import tabuleiro.Tabuleiro;
+import model.Cor;
+import model.Peca;
+import model.Movimento;
+import model.Posicao;
+import model.Tabuleiro;
 
 import java.util.Scanner;
 
