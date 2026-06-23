@@ -1,5 +1,6 @@
 package view;
 
+import dto.IconesDTO;
 import utils.ImageUtil;
 import view.BotaoCasa;
 
@@ -11,6 +12,7 @@ import java.util.function.IntConsumer;
 
 public class PainelTabuleiro extends JPanel {
 
+    private IconesDTO iconesDTO = new IconesDTO();
     private List<List<BotaoCasa>> botoes = new ArrayList<>();
 
     public PainelTabuleiro() {
@@ -25,12 +27,14 @@ public class PainelTabuleiro extends JPanel {
 
                 BotaoCasa botao = new BotaoCasa();
 
+
+                // cavalo PRA CARALHO filho
                 if ((linha + coluna) % 2 == 0) {
                     botao.setBackground(Color.BLACK);
-                    botao.setIcon(cavaloBranco);
+                    botao.setIcon(iconesDTO.getCavaloBranco());
                 } else {
                     botao.setBackground(Color.WHITE);
-                    botao.setIcon(cavaloPreto);
+                    botao.setIcon(iconesDTO.getCavaloPreto());
                 }
 
                 botoes.get(linha).add(botao);
