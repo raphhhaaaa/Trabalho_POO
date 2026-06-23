@@ -2,13 +2,13 @@ package view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.net.URL;
 import view.BotaoCasa;
 import view.PainelTabuleiro;
 
 public class JanelaPrincipal extends JFrame {
     private JPanel mainPanel = new JPanel(new GridBagLayout());
     private PainelTabuleiro tabuleiro = new PainelTabuleiro();
-
     public JanelaPrincipal() {
         // Vincula o painel desenhado à janela
         this.setContentPane(tabuleiro);

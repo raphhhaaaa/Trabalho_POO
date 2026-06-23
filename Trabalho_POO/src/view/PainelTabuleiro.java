@@ -1,5 +1,6 @@
 package view;
 
+import utils.ImageUtil;
 import view.BotaoCasa;
 
 import javax.swing.*;
@@ -26,8 +27,10 @@ public class PainelTabuleiro extends JPanel {
 
                 if ((linha + coluna) % 2 == 0) {
                     botao.setBackground(Color.BLACK);
+                    botao.setIcon(cavaloBranco);
                 } else {
                     botao.setBackground(Color.WHITE);
+                    botao.setIcon(cavaloPreto);
                 }
 
                 botoes.get(linha).add(botao);
