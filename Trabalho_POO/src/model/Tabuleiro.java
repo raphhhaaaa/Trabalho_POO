@@ -68,10 +68,16 @@ public class Tabuleiro {
         if (!peca.validaMovimento(this, destino)) {
             return false;
         }
-        casas[origem.getLinha()][origem.getColuna()].setPeca(null);
-        peca.setPosicao(destino);
-        casas[destino.getLinha()][destino.getColuna()].setPeca(peca);
-        return true;
+
+        try {
+            casas[origem.getLinha()][origem.getColuna()].setPeca(null);
+            peca.setPosicao(destino);
+            casas[destino.getLinha()][destino.getColuna()].setPeca(peca);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     public boolean caminhoLivre(Posicao origem, Posicao destino) {

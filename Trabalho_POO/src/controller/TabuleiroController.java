@@ -50,6 +50,7 @@ public class TabuleiroController implements ActionListener {
             Posicao posicaoBotaoClicado = new Posicao(botaoClicado.getLinha(), botaoClicado.getColuna());
 
             tabuleiroModel.moverPeca(posicaoBotaoSelecionado,  posicaoBotaoClicado);
+            tabuleiroView.desenharPecas(tabuleiroModel); // ainda precisa revisar essa parada o movimento ta meio estranho e parandon de funcionar as vezes
 
             this.botaoSelecionado = null;
         }
