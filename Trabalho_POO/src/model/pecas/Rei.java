@@ -1,13 +1,17 @@
-package model;
+package model.pecas;
 
-public class Bispo extends Peca {
+import model.Cor;
+import model.Posicao;
+import model.Tabuleiro;
 
-    public Bispo(Posicao posicao, Cor cor) {
+public class Rei extends Peca {
+
+    public Rei(Posicao posicao, Cor cor) {
         super(posicao, cor);
     }
 
     public String getLetra() {
-        return "B";
+        return "R";
     }
 
     public boolean[][] movimentosValidos(Tabuleiro tabuleiro) {
@@ -17,11 +21,10 @@ public class Bispo extends Peca {
             for (int coluna = 0; coluna < 8; coluna++) {
                 int diferencaLinha = Math.abs(linha - getPosicao().getLinha());
                 int diferencaColuna = Math.abs(coluna - getPosicao().getColuna());
-                Posicao destino = new Posicao(linha, coluna);
 
-                if (diferencaLinha == diferencaColuna
-                        && diferencaLinha != 0
-                        && tabuleiro.caminhoLivre(getPosicao(), destino)
+                if (diferencaLinha <= 1
+                        && diferencaColuna <= 1
+                        && (diferencaLinha != 0 || diferencaColuna != 0)
                         && podeMover(tabuleiro, linha, coluna)) {
                     matriz[linha][coluna] = true;
                 }

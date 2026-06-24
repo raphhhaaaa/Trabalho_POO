@@ -1,4 +1,8 @@
-package model;
+package model.pecas;
+
+import model.Cor;
+import model.Posicao;
+import model.Tabuleiro;
 
 public class Peca {
 

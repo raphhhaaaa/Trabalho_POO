@@ -1,5 +1,7 @@
 package model;
 
+import model.pecas.*;
+
 public class Tabuleiro {
     private Casa[][] casas;
 
@@ -163,44 +165,5 @@ public class Tabuleiro {
             }
         }
         return true;
-    }
-
-    // --- MÉTODOS DE EXIBIÇÃO ORIGINAIS ---
-
-    public void mostrarTabuleiro() {
-        System.out.println();
-        System.out.println("    a b c d e f g h");
-        for (int linha = 0; linha < 8; linha++) {
-            System.out.print(" " + (8 - linha) + "  ");
-            for (int coluna = 0; coluna < 8; coluna++) {
-                Peca peca = getPeca(linha, coluna);
-                if (peca == null) {
-                    System.out.print(". ");
-                } else {
-                    System.out.print(peca.getDesenho() + " ");
-                }
-            }
-            System.out.println(" " + (8 - linha));
-        }
-        System.out.println("    a b c d e f g h");
-        System.out.println();
-    }
-
-    public void mostrarMatriz(boolean[][] matriz) {
-        System.out.println();
-        System.out.println("    a b c d e f g h");
-        for (int linha = 0; linha < 8; linha++) {
-            System.out.print(" " + (8 - linha) + "  ");
-            for (int coluna = 0; coluna < 8; coluna++) {
-                if (matriz[linha][coluna]) {
-                    System.out.print("1 ");
-                } else {
-                    System.out.print("0 ");
-                }
-            }
-            System.out.println(" " + (8 - linha));
-        }
-        System.out.println("    a b c d e f g h");
-        System.out.println();
     }
 }

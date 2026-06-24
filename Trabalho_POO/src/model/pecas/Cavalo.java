@@ -1,13 +1,17 @@
-package model;
+package model.pecas;
 
-public class Rei extends Peca {
+import model.Cor;
+import model.Posicao;
+import model.Tabuleiro;
 
-    public Rei(Posicao posicao, Cor cor) {
+public class Cavalo extends Peca {
+
+    public Cavalo(Posicao posicao, Cor cor) {
         super(posicao, cor);
     }
 
     public String getLetra() {
-        return "R";
+        return "C";
     }
 
     public boolean[][] movimentosValidos(Tabuleiro tabuleiro) {
@@ -18,9 +22,8 @@ public class Rei extends Peca {
                 int diferencaLinha = Math.abs(linha - getPosicao().getLinha());
                 int diferencaColuna = Math.abs(coluna - getPosicao().getColuna());
 
-                if (diferencaLinha <= 1
-                        && diferencaColuna <= 1
-                        && (diferencaLinha != 0 || diferencaColuna != 0)
+                if (((diferencaLinha == 2 && diferencaColuna == 1)
+                        || (diferencaLinha == 1 && diferencaColuna == 2))
                         && podeMover(tabuleiro, linha, coluna)) {
                     matriz[linha][coluna] = true;
                 }

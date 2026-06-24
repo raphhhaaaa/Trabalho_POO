@@ -1,5 +1,7 @@
 package model;
 
+import model.pecas.Peca;
+
 public class Casa {
 
     private Posicao posicao;

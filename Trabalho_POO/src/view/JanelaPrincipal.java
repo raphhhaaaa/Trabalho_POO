@@ -32,4 +32,8 @@ public class JanelaPrincipal extends JFrame {
             frame.setVisible(true);
         });
     }
+
+    public PainelTabuleiro getTabuleiro() {
+        return tabuleiro;
+    }
 }

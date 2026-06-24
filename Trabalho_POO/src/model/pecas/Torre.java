@@ -1,13 +1,17 @@
-package model;
+package model.pecas;
 
-public class Dama extends Peca {
+import model.Cor;
+import model.Posicao;
+import model.Tabuleiro;
 
-    public Dama(Posicao posicao, Cor cor) {
+public class Torre extends Peca {
+
+    public Torre(Posicao posicao, Cor cor) {
         super(posicao, cor);
     }
 
     public String getLetra() {
-        return "D";
+        return "T";
     }
 
     public boolean[][] movimentosValidos(Tabuleiro tabuleiro) {
@@ -15,13 +19,9 @@ public class Dama extends Peca {
 
         for (int linha = 0; linha < 8; linha++) {
             for (int coluna = 0; coluna < 8; coluna++) {
-                int diferencaLinha = Math.abs(linha - getPosicao().getLinha());
-                int diferencaColuna = Math.abs(coluna - getPosicao().getColuna());
-                boolean reto = linha == getPosicao().getLinha() || coluna == getPosicao().getColuna();
-                boolean diagonal = diferencaLinha == diferencaColuna;
                 Posicao destino = new Posicao(linha, coluna);
 
-                if ((reto || diagonal)
+                if ((linha == getPosicao().getLinha() || coluna == getPosicao().getColuna())
                         && !destino.igual(getPosicao())
                         && tabuleiro.caminhoLivre(getPosicao(), destino)
                         && podeMover(tabuleiro, linha, coluna)) {
