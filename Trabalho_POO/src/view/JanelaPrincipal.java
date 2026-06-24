@@ -6,12 +6,16 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URL;
+
+import controller.TabuleiroController;
+import model.Cor;
 import view.BotaoCasa;
 import view.PainelTabuleiro;
 
 public class JanelaPrincipal extends JFrame {
     private JPanel mainPanel = new JPanel(new GridBagLayout());
     private PainelTabuleiro tabuleiro = new PainelTabuleiro();
+
     public JanelaPrincipal() {
         // Vincula o painel desenhado à janela
         this.setContentPane(tabuleiro);
@@ -22,21 +26,20 @@ public class JanelaPrincipal extends JFrame {
         this.setResizable(false);
 
         // ADICIONA OS ELEMENTOS AQUI
-//        JPanel painelBase = new JPanel();
-//        painelBase.setOpaque(true);
-//        painelBase.setBounds(0, 0, 400, 300);
+    }
 
-        JTextArea caixaTexto = new JTextArea("Vez das");
+    // auxiliar
+    public void textoIndicaVez(Cor vez, JFrame frame) {
+        JTextArea caixaTexto = new JTextArea("Vez das peças: " + vez.getNome() + "S");
         caixaTexto.setForeground(Color.WHITE);
         caixaTexto.setBackground(Color.BLACK);
         caixaTexto.setEditable(false);
-        caixaTexto.setSize(125, 30);
+        caixaTexto.setSize(250, 32);
         caixaTexto.setFont(new Font("Arial", Font.BOLD, 20));
-        caixaTexto.setLocation(220, 280); // Posição dentro do painel
+        caixaTexto.setLocation(170, 280); // Posição dentro do painel
         caixaTexto.setOpaque(true);
 
-        JLayeredPane layeredPane = getLayeredPane();
-//        layeredPane.add(painelBase, JLayeredPane.DEFAULT_LAYER);
+        JLayeredPane layeredPane = frame.getLayeredPane();
         layeredPane.add(caixaTexto, JLayeredPane.POPUP_LAYER);
 
         Timer timer = new Timer(3000, new ActionListener() {
@@ -48,7 +51,6 @@ public class JanelaPrincipal extends JFrame {
         timer.setRepeats(false);
         timer.start();
     }
-
 
     // roda janela principal
     public static void main(String[] args) {

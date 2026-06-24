@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+import model.Cor;
 import model.Posicao;
 import model.Tabuleiro;
 import view.PainelTabuleiro;
@@ -13,6 +14,7 @@ public class TabuleiroController implements ActionListener {
 
     private Tabuleiro tabuleiroModel;
     private PainelTabuleiro tabuleiroView;
+    Cor vez = Cor.BRANCA;
 
     // memoria do clique
     private BotaoCasa botaoSelecionado = null;
@@ -51,9 +53,28 @@ public class TabuleiroController implements ActionListener {
 
             tabuleiroModel.moverPeca(posicaoBotaoSelecionado,  posicaoBotaoClicado);
             tabuleiroView.desenharPecas(tabuleiroModel); // ainda precisa revisar essa parada o movimento ta meio estranho e parandon de funcionar as vezes
+            mudaVez(this.vez);
+
 
             this.botaoSelecionado = null;
         }
+    }
 
+    public void mudaVez(Cor vez) {
+        if (vez.getNome().equals("BRANCA"))
+            setVez(Cor.PRETA);
+        else setVez(Cor.BRANCA);
+    }
+
+    public Cor getVez() {
+        return vez;
+    }
+
+    public void setVez(Cor vez) {
+        this.vez = vez;
+    }
+
+    public BotaoCasa getBotaoSelecionado() {
+        return botaoSelecionado;
     }
 }

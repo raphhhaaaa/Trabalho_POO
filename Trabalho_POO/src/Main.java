@@ -18,6 +18,7 @@ public class Main {
             TabuleiroController controller = new TabuleiroController(tabuleiro, janela.getTabuleiro());
 
             janela.setVisible(true);
+            janela.textoIndicaVez(controller.getVez(), janela);
         });
+      }
     }
-}
