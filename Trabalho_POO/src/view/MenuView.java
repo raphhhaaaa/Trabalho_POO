@@ -28,8 +28,29 @@ public class MenuView extends JPanel {
         btnJogar = new JButton("Jogar");
         btnJogar.setFont(new Font("Arial", Font.BOLD, 15));
         btnJogar.setPreferredSize(new Dimension(100, 40));
-        
-        this.add(btnJogar);
+        btnJogar.setFocusPainted(false);
+        btnJogar.setBorderPainted(false);
+        btnJogar.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+        JLabel titulo = new JLabel("Clique em Jogar para iniciar");
+        titulo.setFont(new Font("Arial", Font.BOLD, 25));
+        titulo.setForeground(Color.BLACK);
+        titulo.setBackground(Color.WHITE);
+        titulo.setOpaque(true);
+        titulo.setPreferredSize(new Dimension(350, 40));
+
+        GridBagConstraints gbcTitulo = new GridBagConstraints();
+        gbcTitulo.gridx = 0;
+        gbcTitulo.gridy = 0;
+        gbcTitulo.insets = new Insets(0, 0, 10, 0); // 50px de espaçamento abaixo do titulo
+
+        this.add(titulo, gbcTitulo);
+
+        GridBagConstraints gbcBotao = new GridBagConstraints();
+        gbcBotao.gridx = 0;
+        gbcBotao.gridy = 1;
+
+        this.add(btnJogar, gbcBotao);
     }
     
     public JButton getBtnJogar() {
