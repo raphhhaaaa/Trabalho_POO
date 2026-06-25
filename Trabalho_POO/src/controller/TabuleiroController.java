@@ -7,6 +7,8 @@ import java.awt.event.ActionEvent;
 import model.Cor;
 import model.Posicao;
 import model.Tabuleiro;
+import model.pecas.Peca;
+import view.JanelaPrincipal;
 import view.PainelTabuleiro;
 import view.BotaoCasa;
 
@@ -14,14 +16,16 @@ public class TabuleiroController implements ActionListener {
 
     private Tabuleiro tabuleiroModel;
     private PainelTabuleiro tabuleiroView;
+    private JanelaPrincipal janelaPrincipal;
     Cor vez = Cor.BRANCA;
 
     // memoria do clique
     private BotaoCasa botaoSelecionado = null;
 
-    public TabuleiroController(Tabuleiro tabuleiroModel, PainelTabuleiro tabuleiroView) {
+    public TabuleiroController(Tabuleiro tabuleiroModel, JanelaPrincipal janelaPrincipal) {
         this.tabuleiroModel = tabuleiroModel;
-        this.tabuleiroView = tabuleiroView;
+        this.janelaPrincipal = janelaPrincipal;
+        this.tabuleiroView = janelaPrincipal.getTabuleiro();
 
         BotaoCasa[][] botoes = tabuleiroView.getBotoes();
 
@@ -30,6 +34,8 @@ public class TabuleiroController implements ActionListener {
                 botoes[linha][coluna].addActionListener(this);
             }
         }
+        
+        this.janelaPrincipal.textoIndicaVez(this.vez, this.janelaPrincipal);
     }
 
     // interface interna do awt, chamada quando o botao é clicado
@@ -46,15 +52,23 @@ public class TabuleiroController implements ActionListener {
         System.out.println("Clicaram na linha " + linha + " e coluna " + coluna);
 
         if (botaoSelecionado == null) {
-            this.botaoSelecionado = botaoClicado;
+            Posicao pos = new Posicao(linha, coluna);
+            Peca peca = tabuleiroModel.getPeca(pos);
+            if (peca != null && peca.getCor() == this.vez) {
+                this.botaoSelecionado = botaoClicado;
+            } else {
+                System.out.println("Não é a sua vez ou casa vazia!");
+            }
         } else {
             Posicao posicaoBotaoSelecionado = new Posicao(botaoSelecionado.getLinha(), botaoSelecionado.getColuna());
             Posicao posicaoBotaoClicado = new Posicao(botaoClicado.getLinha(), botaoClicado.getColuna());
 
-            tabuleiroModel.moverPeca(posicaoBotaoSelecionado,  posicaoBotaoClicado);
-            tabuleiroView.desenharPecas(tabuleiroModel); // ainda precisa revisar essa parada o movimento ta meio estranho e parandon de funcionar as vezes
-            mudaVez(this.vez);
-
+            boolean moveu = tabuleiroModel.moverPeca(posicaoBotaoSelecionado,  posicaoBotaoClicado);
+            if (moveu) {
+                tabuleiroView.desenharPecas(tabuleiroModel); // ainda precisa revisar essa parada o movimento ta meio estranho e parandon de funcionar as vezes
+                mudaVez(this.vez);
+                janelaPrincipal.textoIndicaVez(this.vez, janelaPrincipal);
+            }
 
             this.botaoSelecionado = null;
         }

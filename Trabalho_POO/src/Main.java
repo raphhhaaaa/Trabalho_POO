@@ -15,10 +15,9 @@ public class Main {
             // manda a View desenhar o estado atual do Model
             janela.getTabuleiro().desenharPecas(tabuleiro);
 
-            TabuleiroController controller = new TabuleiroController(tabuleiro, janela.getTabuleiro());
+            TabuleiroController controller = new TabuleiroController(tabuleiro, janela);
 
             janela.setVisible(true);
-            janela.textoIndicaVez(controller.getVez(), janela);
         });
       }
     }
