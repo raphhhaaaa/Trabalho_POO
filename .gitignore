@@ -11,4 +11,6 @@
 /.idea
 /.idea/
 /out
-
+settings.json
+# Ignorar arquivos compilados do Java
+/Trabalho_POO/bin

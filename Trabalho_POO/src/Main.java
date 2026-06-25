@@ -1,3 +1,4 @@
+import controller.MenuController;
 import controller.TabuleiroController;
 import model.Tabuleiro;
 import view.JanelaPrincipal;
@@ -16,6 +17,7 @@ public class Main {
             janela.getTabuleiro().desenharPecas(tabuleiro);
 
             TabuleiroController controller = new TabuleiroController(tabuleiro, janela);
+            MenuController menuController = new MenuController(janela.getPainelMenu(), janela);
 
             janela.setVisible(true);
         });

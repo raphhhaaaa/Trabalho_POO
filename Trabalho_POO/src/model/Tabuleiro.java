@@ -4,6 +4,7 @@ import model.pecas.*;
 
 public class Tabuleiro {
     private Casa[][] casas;
+    private Cor vez = Cor.BRANCA;
 
     public Tabuleiro() {
         casas = new Casa[8][8];
@@ -171,5 +172,21 @@ public class Tabuleiro {
             }
         }
         return true;
+    }
+
+    public Cor getVez() {
+        return vez;
+    }
+
+    public void setVez(Cor vez) {
+        this.vez = vez;
+    }
+
+    public void mudaVez() {
+        if (this.vez == Cor.BRANCA) {
+            this.vez = Cor.PRETA;
+        } else {
+            this.vez = Cor.BRANCA;
+        }
     }
 }

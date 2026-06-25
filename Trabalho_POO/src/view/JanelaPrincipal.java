@@ -13,12 +13,22 @@ import view.BotaoCasa;
 import view.PainelTabuleiro;
 
 public class JanelaPrincipal extends JFrame {
-    private JPanel mainPanel = new JPanel(new GridBagLayout());
+    private CardLayout cardLayout = new CardLayout();
+    private JPanel mainPanel = new JPanel(cardLayout);
+    private MenuView painelMenu;
     private PainelTabuleiro tabuleiro = new PainelTabuleiro();
 
     public JanelaPrincipal() {
+
+        // instancia a tela de menu (sem injetar logica de transicao)
+        painelMenu = new MenuView("/resources/Papel-de-Parede-de-Jogo-de-Xadres.jpg");
+        painelMenu.setBackground(Color.BLACK);
+
+        mainPanel.add(painelMenu, "menu");
+        mainPanel.add(tabuleiro, "tabuleiro");
+
         // Vincula o painel desenhado à janela
-        this.setContentPane(tabuleiro);
+        this.setContentPane(mainPanel);
         this.setTitle("Xadrez");
         this.setSize(600, 600);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -64,5 +74,14 @@ public class JanelaPrincipal extends JFrame {
 
     public PainelTabuleiro getTabuleiro() {
         return tabuleiro;
+    }
+
+    public MenuView getPainelMenu() {
+        return painelMenu;
+    }
+
+    public void mostrarTabuleiro() {
+        cardLayout.show(mainPanel, "tabuleiro");
+        textoIndicaVez(Cor.BRANCA, this);
     }
 }

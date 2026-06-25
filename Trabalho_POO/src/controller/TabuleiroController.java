@@ -17,10 +17,9 @@ public class TabuleiroController implements ActionListener {
     private Tabuleiro tabuleiroModel;
     private PainelTabuleiro tabuleiroView;
     private JanelaPrincipal janelaPrincipal;
-    Cor vez = Cor.BRANCA;
 
     // memoria do clique
-    private BotaoCasa botaoSelecionado = null;
+    private Posicao posicaoSelecionada = null;
 
     public TabuleiroController(Tabuleiro tabuleiroModel, JanelaPrincipal janelaPrincipal) {
         this.tabuleiroModel = tabuleiroModel;
@@ -34,8 +33,6 @@ public class TabuleiroController implements ActionListener {
                 botoes[linha][coluna].addActionListener(this);
             }
         }
-        
-        this.janelaPrincipal.textoIndicaVez(this.vez, this.janelaPrincipal);
     }
 
     // interface interna do awt, chamada quando o botao é clicado
@@ -51,44 +48,29 @@ public class TabuleiroController implements ActionListener {
         // debug, remover depois
         System.out.println("Clicaram na linha " + linha + " e coluna " + coluna);
 
-        if (botaoSelecionado == null) {
+        if (posicaoSelecionada == null) {
             Posicao pos = new Posicao(linha, coluna);
             Peca peca = tabuleiroModel.getPeca(pos);
-            if (peca != null && peca.getCor() == this.vez) {
-                this.botaoSelecionado = botaoClicado;
+            if (peca != null && peca.getCor() == tabuleiroModel.getVez()) {
+                this.posicaoSelecionada = pos;
             } else {
                 System.out.println("Não é a sua vez ou casa vazia!");
             }
         } else {
-            Posicao posicaoBotaoSelecionado = new Posicao(botaoSelecionado.getLinha(), botaoSelecionado.getColuna());
-            Posicao posicaoBotaoClicado = new Posicao(botaoClicado.getLinha(), botaoClicado.getColuna());
+            Posicao posicaoBotaoClicado = new Posicao(linha, coluna);
 
-            boolean moveu = tabuleiroModel.moverPeca(posicaoBotaoSelecionado,  posicaoBotaoClicado);
+            boolean moveu = tabuleiroModel.moverPeca(posicaoSelecionada, posicaoBotaoClicado);
             if (moveu) {
-                tabuleiroView.desenharPecas(tabuleiroModel); // ainda precisa revisar essa parada o movimento ta meio estranho e parandon de funcionar as vezes
-                mudaVez(this.vez);
-                janelaPrincipal.textoIndicaVez(this.vez, janelaPrincipal);
+                tabuleiroView.desenharPecas(tabuleiroModel);
+                tabuleiroModel.mudaVez();
+                janelaPrincipal.textoIndicaVez(tabuleiroModel.getVez(), janelaPrincipal);
             }
 
-            this.botaoSelecionado = null;
+            this.posicaoSelecionada = null;
         }
     }
 
-    public void mudaVez(Cor vez) {
-        if (vez.getNome().equals("BRANCA"))
-            setVez(Cor.PRETA);
-        else setVez(Cor.BRANCA);
-    }
-
-    public Cor getVez() {
-        return vez;
-    }
-
-    public void setVez(Cor vez) {
-        this.vez = vez;
-    }
-
-    public BotaoCasa getBotaoSelecionado() {
-        return botaoSelecionado;
+    public Posicao getPosicaoSelecionada() {
+        return posicaoSelecionada;
     }
 }
