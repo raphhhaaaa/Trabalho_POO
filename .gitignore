@@ -14,3 +14,4 @@
 settings.json
 # Ignorar arquivos compilados do Java
 /Trabalho_POO/bin
+/Trabalho_POO/bin/
