@@ -75,4 +75,20 @@ public class PainelTabuleiro extends JPanel {
     public BotaoCasa[][] getBotoes() {
         return botoes;
     }
+
+    public void destacarCasa(int linha, int coluna) {
+        botoes[linha][coluna].setBackground(Color.lightGray);
+    }
+
+    public void limparDestaques() {
+        for (int l = 0; l < 8; l++) {
+            for (int c = 0; c < 8; c++) {
+                if ((l + c) % 2 == 0) {
+                    botoes[l][c].setBackground(Color.DARK_GRAY);
+                } else {
+                    botoes[l][c].setBackground(Color.WHITE);
+                }
+            }
+        }
+    }
 }

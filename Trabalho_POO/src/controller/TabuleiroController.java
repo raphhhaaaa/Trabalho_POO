@@ -53,20 +53,29 @@ public class TabuleiroController implements ActionListener {
             Peca peca = tabuleiroModel.getPeca(pos);
             if (peca != null && peca.getCor() == tabuleiroModel.getVez()) {
                 this.posicaoSelecionada = pos;
+                tabuleiroView.destacarCasa(linha, coluna);
             } else {
                 System.out.println("Não é a sua vez ou casa vazia!");
             }
         } else {
+            // se clicou na mesma casa, cancela a seleção
+            if (posicaoSelecionada.getLinha() == linha && posicaoSelecionada.getColuna() == coluna) {
+                this.posicaoSelecionada = null;
+                tabuleiroView.limparDestaques();
+                return;
+            }
+
             Posicao posicaoBotaoClicado = new Posicao(linha, coluna);
 
             boolean moveu = tabuleiroModel.moverPeca(posicaoSelecionada, posicaoBotaoClicado);
             if (moveu) {
                 tabuleiroView.desenharPecas(tabuleiroModel);
                 tabuleiroModel.mudaVez();
-                janelaPrincipal.textoIndicaVez(tabuleiroModel.getVez(), janelaPrincipal);
+                janelaPrincipal.atualizarLabelVez(tabuleiroModel.getVez());
             }
 
             this.posicaoSelecionada = null;
+            tabuleiroView.limparDestaques();
         }
     }
 

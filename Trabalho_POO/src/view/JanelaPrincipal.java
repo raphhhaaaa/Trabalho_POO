@@ -6,7 +6,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URL;
-
 import controller.TabuleiroController;
 import model.Cor;
 import view.BotaoCasa;
@@ -17,6 +16,7 @@ public class JanelaPrincipal extends JFrame {
     private JPanel mainPanel = new JPanel(cardLayout);
     private MenuView painelMenu;
     private PainelTabuleiro tabuleiro = new PainelTabuleiro();
+    private JLabel labelVez;
 
     public JanelaPrincipal() {
 
@@ -24,10 +24,58 @@ public class JanelaPrincipal extends JFrame {
         painelMenu = new MenuView("/resources/Papel-de-Parede-de-Jogo-de-Xadres.jpg");
         painelMenu.setBackground(Color.BLACK);
 
-        mainPanel.add(painelMenu, "menu");
-        mainPanel.add(tabuleiro, "tabuleiro");
+        // label que mostra a cor da peça dona da jogada
+        labelVez = new JLabel("Vez das peças: BRANCAS", SwingConstants.CENTER);
+        labelVez.setFont(new Font("Arial", Font.BOLD, 18));
+        labelVez.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        // Vincula o painel desenhado à janela
+        // seta borda esquerda vazia ao redor do tabuleiro
+        tabuleiro.setBorder(BorderFactory.createEmptyBorder(0,0,0,20));
+
+
+        // borda inferior com letras (A - H)
+        JPanel painelLetras = new JPanel(new GridLayout(1, 8));
+        String[] letras = {"A", "B", "C", "D", "E", "F", "G", "H"};
+        for (String letra : letras) {
+            JLabel lbl = new JLabel(letra, SwingConstants.CENTER);
+            lbl.setFont(new Font("Arial", Font.BOLD, 14));
+            painelLetras.add(lbl);
+        }
+
+
+        // borda esquerda com numeros (1 - 8)
+        JPanel painelNumeros = new JPanel(new GridLayout(8, 1));
+        String[] numeros = {"8", "7", "6", "5", "4", "3", "2", "1"};
+        for (String num : numeros) {
+            JLabel lbl = new JLabel(num, SwingConstants.CENTER);
+            lbl.setFont(new Font("Arial", Font.BOLD, 14));
+            lbl.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 10));
+            painelNumeros.add(lbl);
+        }
+
+
+        // cria instancia do tabuleiro com panel
+        JPanel tabuleiroEixoX = new JPanel(new BorderLayout());
+        tabuleiroEixoX.add(tabuleiro, BorderLayout.CENTER);
+        tabuleiroEixoX.add(painelLetras, BorderLayout.SOUTH);
+
+
+        // cria tabuleiro com os dois paineis (letras e numeros)
+        JPanel tabuleiroComEixos = new JPanel(new BorderLayout());
+        tabuleiroComEixos.add(painelNumeros, BorderLayout.WEST);
+        tabuleiroComEixos.add(tabuleiroEixoX, BorderLayout.CENTER);
+        tabuleiroComEixos.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10));
+
+        // instancia painel final com a label indicadora da vez e os/as bordas/paines de letras e numeros
+        JPanel painelJogo = new JPanel(new BorderLayout());
+        painelJogo.add(labelVez, BorderLayout.NORTH);
+        painelJogo.add(tabuleiroComEixos, BorderLayout.CENTER);
+
+        // adiciona menu e tabuleiro à janela principal
+        mainPanel.add(painelMenu, "menu");
+        mainPanel.add(painelJogo, "tabuleiro");
+
+        // vincula o painel desenhado à janela
         this.setContentPane(mainPanel);
         this.setTitle("Xadrez");
         this.setSize(600, 600);
@@ -35,31 +83,6 @@ public class JanelaPrincipal extends JFrame {
         this.setLocationRelativeTo(null); // Centraliza a tela
         this.setResizable(false);
 
-        // ADICIONA OS ELEMENTOS AQUI
-    }
-
-    // auxiliar
-    public void textoIndicaVez(Cor vez, JFrame frame) {
-        JTextArea caixaTexto = new JTextArea("Vez das peças: " + vez.getNome() + "S");
-        caixaTexto.setForeground(Color.WHITE);
-        caixaTexto.setBackground(Color.BLACK);
-        caixaTexto.setEditable(false);
-        caixaTexto.setSize(250, 32);
-        caixaTexto.setFont(new Font("Arial", Font.BOLD, 20));
-        caixaTexto.setLocation(170, 280); // Posição dentro do painel
-        caixaTexto.setOpaque(true);
-
-        JLayeredPane layeredPane = frame.getLayeredPane();
-        layeredPane.add(caixaTexto, JLayeredPane.POPUP_LAYER);
-
-        Timer timer = new Timer(3000, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                caixaTexto.setVisible(false);
-            }
-        });
-        timer.setRepeats(false);
-        timer.start();
     }
 
     // roda janela principal
@@ -82,6 +105,12 @@ public class JanelaPrincipal extends JFrame {
 
     public void mostrarTabuleiro() {
         cardLayout.show(mainPanel, "tabuleiro");
-        textoIndicaVez(Cor.BRANCA, this);
+        atualizarLabelVez(Cor.BRANCA);
+    }
+
+    public void atualizarLabelVez(Cor vez) {
+        labelVez.setText("Vez das peças: " + vez.getNome() + "S");
+        labelVez.revalidate();
+        labelVez.repaint();
     }
 }
