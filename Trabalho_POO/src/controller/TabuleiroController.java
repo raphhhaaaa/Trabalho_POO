@@ -20,6 +20,7 @@ public class TabuleiroController implements ActionListener {
 
     // memoria do clique
     private Posicao posicaoSelecionada = null;
+    private boolean jogoAcabou = false;
 
     public TabuleiroController(Tabuleiro tabuleiroModel, JanelaPrincipal janelaPrincipal) {
         this.tabuleiroModel = tabuleiroModel;
@@ -38,6 +39,10 @@ public class TabuleiroController implements ActionListener {
     // interface interna do awt, chamada quando o botao é clicado
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
+        if (jogoAcabou) {
+            return; // Se o jogo acabou, ignora os cliques
+        }
+
         // pega quem foi clicado
         BotaoCasa botaoClicado = (BotaoCasa) actionEvent.getSource();
 
@@ -72,11 +77,41 @@ public class TabuleiroController implements ActionListener {
                 tabuleiroView.desenharPecas(tabuleiroModel);
                 tabuleiroModel.mudaVez();
                 janelaPrincipal.atualizarLabelVez(tabuleiroModel.getVez());
+
+                if (tabuleiroModel.estaEmChequeMate(tabuleiroModel.getVez())) {
+                    Posicao posRei = tabuleiroModel.getPosicaoRei(tabuleiroModel.getVez());
+                    tabuleiroView.destacarXequeMate(posRei.getLinha(), posRei.getColuna(), posicaoBotaoClicado.getLinha(), posicaoBotaoClicado.getColuna());
+
+                    String vencedor = tabuleiroModel.getVez() == Cor.BRANCA ? "PRETAS" : "BRANCAS";
+                    
+                    boolean querJogarDeNovo = janelaPrincipal.perguntarJogarNovamente(vencedor);
+
+                    if (querJogarDeNovo) {
+                        reiniciarJogo();
+                        return; // Sai do método para não resetar variáveis desnecessariamente
+                    } else {
+                        jogoAcabou = true; // Trava o tabuleiro
+                    }
+                } else if (tabuleiroModel.estaEmCheque(tabuleiroModel.getVez())) {
+                    janelaPrincipal.exibirAvisoXeque();
+                }
             }
 
             this.posicaoSelecionada = null;
-            tabuleiroView.limparDestaques();
+            if (!jogoAcabou) {
+                tabuleiroView.limparDestaques();
+            }
         }
+    }
+
+    private void reiniciarJogo() {
+        this.tabuleiroModel = new Tabuleiro(); // Cria um novo jogo
+        this.posicaoSelecionada = null;
+        this.jogoAcabou = false;
+
+        tabuleiroView.limparDestaques();
+        tabuleiroView.desenharPecas(tabuleiroModel);
+        janelaPrincipal.atualizarLabelVez(tabuleiroModel.getVez());
     }
 
     public Posicao getPosicaoSelecionada() {

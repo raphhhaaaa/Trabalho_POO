@@ -71,9 +71,22 @@ public class Tabuleiro {
         }
 
         try {
+            // Salva o estado para reverter se ficar em xeque
+            Peca pecaCapturada = getPeca(destino);
+
             casas[origem.getLinha()][origem.getColuna()].setPeca(null);
             peca.setPosicao(destino);
             casas[destino.getLinha()][destino.getColuna()].setPeca(peca);
+
+            // Verifica se o próprio rei ficou em xeque
+            if (estaEmCheque(peca.getCor())) {
+                // Reverte o movimento
+                casas[origem.getLinha()][origem.getColuna()].setPeca(peca);
+                peca.setPosicao(origem);
+                casas[destino.getLinha()][destino.getColuna()].setPeca(pecaCapturada);
+                return false;
+            }
+
             return true;
         } catch (Exception e) {
             e.printStackTrace();

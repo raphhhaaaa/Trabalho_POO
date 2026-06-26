@@ -113,4 +113,19 @@ public class JanelaPrincipal extends JFrame {
         labelVez.revalidate();
         labelVez.repaint();
     }
+
+    public void exibirAvisoXeque() {
+        JOptionPane.showMessageDialog(this, "Xeque!", "Aviso", JOptionPane.WARNING_MESSAGE);
+    }
+
+    public boolean perguntarJogarNovamente(String vencedor) {
+        int opcao = JOptionPane.showConfirmDialog(
+            this, 
+            "XEQUE-MATE! As peças " + vencedor + " venceram!\nDeseja jogar novamente?", 
+            "Fim de Jogo", 
+            JOptionPane.YES_NO_OPTION,
+            JOptionPane.INFORMATION_MESSAGE
+        );
+        return opcao == JOptionPane.YES_OPTION;
+    }
 }

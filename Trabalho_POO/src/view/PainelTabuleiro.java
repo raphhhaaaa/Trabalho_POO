@@ -80,6 +80,15 @@ public class PainelTabuleiro extends JPanel {
         botoes[linha][coluna].setBackground(Color.lightGray);
     }
 
+    public void destacarXequeMate(int linhaRei, int colunaRei, int linhaAtacante, int colunaAtacante) {
+        Color vermelhoClaro = new Color(255, 102, 102);
+        botoes[linhaRei][colunaRei].setBackground(vermelhoClaro);
+        botoes[linhaAtacante][colunaAtacante].setBackground(vermelhoClaro);
+        
+        botoes[linhaRei][colunaRei].paintImmediately(0, 0, botoes[linhaRei][colunaRei].getWidth(), botoes[linhaRei][colunaRei].getHeight());
+        botoes[linhaAtacante][colunaAtacante].paintImmediately(0, 0, botoes[linhaAtacante][colunaAtacante].getWidth(), botoes[linhaAtacante][colunaAtacante].getHeight());
+    }
+
     public void limparDestaques() {
         for (int l = 0; l < 8; l++) {
             for (int c = 0; c < 8; c++) {
