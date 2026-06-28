@@ -15,22 +15,22 @@ public class IconesDTO {
 
     // ICONES
     ImageIcon cavaloBranco = ImageUtil.redimensionaImagem("/resources/cavalo-branco.png", 56, 56);
-    ImageIcon cavaloPreto = ImageUtil.redimensionaImagem("/resources/cavalo-preto.png", 56, 56);
+    ImageIcon cavaloPreto = ImageUtil.redimensionaImagem("/resources/cavalo-preto.png", 64, 64);
 
     ImageIcon reiBranco = ImageUtil.redimensionaImagem("/resources/rei-branco.png", 56, 56);
-    ImageIcon reiPreto = ImageUtil.redimensionaImagem("/resources/rei-preto.png", 56, 56);
+    ImageIcon reiPreto = ImageUtil.redimensionaImagem("/resources/rei-preto.png", 64, 64);
 
     ImageIcon torreBranco = ImageUtil.redimensionaImagem("/resources/torre-branca.png", 56, 56);
-    ImageIcon torrePreto = ImageUtil.redimensionaImagem("/resources/torre-preta.png", 56, 56);
+    ImageIcon torrePreto = ImageUtil.redimensionaImagem("/resources/torre-preta.png", 64, 64);
 
     ImageIcon bispoBranco = ImageUtil.redimensionaImagem("/resources/bispo-branco.png", 56, 56);
-    ImageIcon bispoPreto = ImageUtil.redimensionaImagem("/resources/bispo-preto.png", 56, 56);
+    ImageIcon bispoPreto = ImageUtil.redimensionaImagem("/resources/bispo-preto.png", 64, 64);
 
     ImageIcon damaBranco = ImageUtil.redimensionaImagem("/resources/dama-branca.png", 56, 56);
-    ImageIcon damaPreto = ImageUtil.redimensionaImagem("/resources/dama-preta.png", 56, 56);
+    ImageIcon damaPreto = ImageUtil.redimensionaImagem("/resources/dama-preta.png", 64, 64);
 
     ImageIcon peaoBranco = ImageUtil.redimensionaImagem("/resources/peao-branco.png", 56, 56);
-    ImageIcon peaoPreto = ImageUtil.redimensionaImagem("/resources/peao-preto.png", 56, 56);
+    ImageIcon peaoPreto = ImageUtil.redimensionaImagem("/resources/peao-preto.png", 64, 64);
 
     // getters
     public ImageIcon getCavaloBranco() {
