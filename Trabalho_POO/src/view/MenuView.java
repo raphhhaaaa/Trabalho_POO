@@ -1,5 +1,7 @@
 package view;
 
+import utils.ImageUtil;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.text.FieldView;
@@ -12,6 +14,7 @@ import java.io.IOException;
 public class MenuView extends JPanel {
     private JButton btnJogar;
     private JButton btnSair;
+    private JButton btnToggleMusica;
     private Image imagemFundo;
 
     public MenuView(String caminhoImagem) {
@@ -36,6 +39,7 @@ public class MenuView extends JPanel {
         btnJogar.setPreferredSize(new Dimension(100, 40));
         btnJogar.setFocusPainted(false);
         btnJogar.setBorderPainted(false);
+        btnJogar.setBackground(Color.lightGray);
         btnJogar.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
 
@@ -44,9 +48,16 @@ public class MenuView extends JPanel {
         btnSair.setPreferredSize(new Dimension(100, 40));
         btnSair.setFocusPainted(false);
         btnSair.setBorderPainted(false);
+        btnSair.setBackground(Color.lightGray);
         btnSair.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-
+        btnToggleMusica = new JButton();
+        btnToggleMusica.setIcon(ImageUtil.redimensionaImagem("/resources/icone-audio.png", 56, 56));
+        btnToggleMusica.setOpaque(false);
+        btnToggleMusica.setFocusPainted(false);
+        btnToggleMusica.setBorderPainted(false);
+        btnToggleMusica.setContentAreaFilled(false);
+        btnToggleMusica.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
         JLabel titulo = new JLabel("Xadrez 1.0");
         titulo.setFont(new Font("Arial", Font.BOLD, 40));
@@ -59,27 +70,41 @@ public class MenuView extends JPanel {
 
         // configuração layout dos elementos da tela //
 
+        GridBagConstraints gbcEspacoTopo = new GridBagConstraints();
+        gbcEspacoTopo.gridx = 0;
+        gbcEspacoTopo.gridy = 0;
+        gbcEspacoTopo.weighty = 1.0;
+        this.add(Box.createVerticalGlue(), gbcEspacoTopo);
+
         GridBagConstraints gbcTitulo = new GridBagConstraints();
         gbcTitulo.gridx = 0;
-        gbcTitulo.gridy = 0;
+        gbcTitulo.gridy = 1;
         gbcTitulo.anchor = GridBagConstraints.EAST;
         gbcTitulo.weightx = 1.0;
-        gbcTitulo.insets = new Insets(0, 0, 20, 20); // 50px de margem à esquerda, 10px abaixo
+        gbcTitulo.insets = new Insets(0, 0, 20, 20);
         this.add(titulo, gbcTitulo);
 
         GridBagConstraints gbcBotao = new GridBagConstraints();
         gbcBotao.gridx = 0;
-        gbcBotao.gridy = 1;
+        gbcBotao.gridy = 2;
         gbcBotao.anchor = GridBagConstraints.EAST;
-        gbcBotao.insets = new Insets(0, 0, 100, 95); // 50px de margem à esquerda
+        gbcBotao.insets = new Insets(0, 0, 100, 95);
         this.add(btnJogar, gbcBotao);
 
         GridBagConstraints gbcBotaoSair = new GridBagConstraints();
         gbcBotaoSair.gridx = 0;
-        gbcBotaoSair.gridy = 1;
+        gbcBotaoSair.gridy = 2;
         gbcBotaoSair.anchor = GridBagConstraints.EAST;
-        gbcBotaoSair.insets = new Insets(0, 0, 0, 95); // 50px de margem à esquerda
+        gbcBotaoSair.insets = new Insets(0, 0, 0, 95);
         this.add(btnSair, gbcBotaoSair);
+
+        GridBagConstraints gbcMusica = new GridBagConstraints();
+        gbcMusica.gridx = 0;
+        gbcMusica.gridy = 3;
+        gbcMusica.anchor = GridBagConstraints.SOUTHEAST;
+        gbcMusica.weighty = 1.0;
+        gbcMusica.insets = new Insets(0, 0, 20, 20);
+        this.add(btnToggleMusica, gbcMusica);
 
 
         // --------------------------------------------------------------- //
@@ -91,6 +116,10 @@ public class MenuView extends JPanel {
 
     public JButton getBtnSair() {
         return btnSair;
+    }
+
+    public JButton getBtnToggleMusica() {
+        return btnToggleMusica;
     }
 
     @Override

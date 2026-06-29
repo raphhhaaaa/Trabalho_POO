@@ -67,7 +67,7 @@ public class TabuleiroController implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
         if (jogoAcabou) {
-            return; // Se o jogo acabou, ignora os cliques
+            return; // se o jogo acabou, ignora os cliques
         }
 
         // pega quem foi clicado
@@ -117,7 +117,7 @@ public class TabuleiroController implements ActionListener {
                         reiniciarJogo();
                         return; // sai do metodo para não resetar variáveis desnecessariamente
                     } else {
-                        jogoAcabou = true; // Trava o tabuleiro
+                        jogoAcabou = true; // trava o tabuleiro
                     }
                 } else if (tabuleiroModel.estaEmCheque(tabuleiroModel.getVez())) {
                     janelaPrincipal.exibirAvisoXeque();
