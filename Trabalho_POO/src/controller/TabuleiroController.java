@@ -3,6 +3,8 @@ package controller;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import model.Cor;
 import model.Posicao;
@@ -11,6 +13,8 @@ import model.pecas.Peca;
 import view.JanelaPrincipal;
 import view.PainelTabuleiro;
 import view.BotaoCasa;
+
+import javax.swing.*;
 
 public class TabuleiroController implements ActionListener {
 
@@ -27,6 +31,8 @@ public class TabuleiroController implements ActionListener {
         this.janelaPrincipal = janelaPrincipal;
         this.tabuleiroView = janelaPrincipal.getTabuleiro();
 
+
+        // adiciona actionlistener pra cada um dos botoes (que representam cada casa do tabuleiro)
         BotaoCasa[][] botoes = tabuleiroView.getBotoes();
 
         for (int linha = 0; linha < 8; linha++) {
@@ -34,9 +40,30 @@ public class TabuleiroController implements ActionListener {
                 botoes[linha][coluna].addActionListener(this);
             }
         }
+
+        // mouselisteners
+
+        janelaPrincipal.getBtnVoltarMenu().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                janelaPrincipal.getBtnVoltarMenu().setContentAreaFilled(true);
+                janelaPrincipal.getBtnVoltarMenu().setBackground(Color.lightGray);
+                janelaPrincipal.getBtnVoltarMenu().setFont(new Font("Arial", Font.BOLD, 15));
+                janelaPrincipal.getLabelVez().setBorder(BorderFactory.createEmptyBorder(10, 185, 10, 10));
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                janelaPrincipal.getBtnVoltarMenu().setContentAreaFilled(false);
+                janelaPrincipal.getBtnVoltarMenu().setFont(new Font("Arial", Font.BOLD, 18));
+                janelaPrincipal.getLabelVez().setBorder(BorderFactory.createEmptyBorder(10, 160, 10, 10));
+            }
+
+        });
+
     }
 
-    // interface interna do awt, chamada quando o botao é clicado
+    // o que acontece quando o botaoCasa é clicado
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
         if (jogoAcabou) {
@@ -88,7 +115,7 @@ public class TabuleiroController implements ActionListener {
 
                     if (querJogarDeNovo) {
                         reiniciarJogo();
-                        return; // Sai do método para não resetar variáveis desnecessariamente
+                        return; // sai do metodo para não resetar variáveis desnecessariamente
                     } else {
                         jogoAcabou = true; // Trava o tabuleiro
                     }

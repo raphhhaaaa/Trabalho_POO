@@ -4,6 +4,8 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.text.FieldView;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 
@@ -36,12 +38,14 @@ public class MenuView extends JPanel {
         btnJogar.setBorderPainted(false);
         btnJogar.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
+
         btnSair = new JButton("Sair");
         btnSair.setFont(new Font("Arial", Font.BOLD, 15));
         btnSair.setPreferredSize(new Dimension(100, 40));
         btnSair.setFocusPainted(false);
         btnSair.setBorderPainted(false);
         btnSair.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
 
 
         JLabel titulo = new JLabel("Xadrez 1.0");
