@@ -21,7 +21,7 @@ public class JanelaPrincipal extends JFrame {
     public JanelaPrincipal() {
 
         // instancia a tela de menu (sem injetar logica de transicao)
-        painelMenu = new MenuView("/resources/Papel-de-Parede-de-Jogo-de-Xadres.jpg");
+        painelMenu = new MenuView("/resources/plano-de-fundo-xadrez2.jpg");
         painelMenu.setBackground(Color.BLACK);
 
         // label que mostra a cor da peça dona da jogada

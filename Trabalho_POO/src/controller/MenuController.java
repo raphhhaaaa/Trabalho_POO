@@ -13,13 +13,21 @@ public class MenuController implements ActionListener {
         this.menuView = menuView;
         this.janelaPrincipal = janelaPrincipal;
         
-        // O controller capturao evento de clique do botão da view do menu
+        // O controller captura o evento de clique dos botões
         this.menuView.getBtnJogar().addActionListener(this);
+        this.menuView.getBtnSair().addActionListener(this);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        // manda a view realizar a transição de tela
-        janelaPrincipal.mostrarTabuleiro();
+
+        if (e.getSource().equals(menuView.getBtnJogar())) {
+            // se foi o btn jogar que foi clicado, manda a view realizar a transição de tela
+            janelaPrincipal.mostrarTabuleiro();
+        } else if (e.getSource().equals(menuView.getBtnSair())) {
+            // se foi o btn jogar que foi clicado, manda o programa encerrar
+            System.exit(0);
+        }
+
     }
 }
