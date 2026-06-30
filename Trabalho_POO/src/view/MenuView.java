@@ -60,7 +60,7 @@ public class MenuView extends JPanel {
         btnSair.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
         btnToggleMusica = new JButton();
-        btnToggleMusica.setIcon(ImageUtil.redimensionaImagem("/resources/icone-audio-aberto.png", 64, 64));
+        btnToggleMusica.setIcon(ImageUtil.redimensionaImagem("/resources/icone-audio-aberto.png", 72, 64));
         btnToggleMusica.setPreferredSize(new Dimension(70, 70));
         btnToggleMusica.setOpaque(false);
         btnToggleMusica.setFocusPainted(false);

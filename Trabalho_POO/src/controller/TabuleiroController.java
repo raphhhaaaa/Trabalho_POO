@@ -86,6 +86,17 @@ public class TabuleiroController implements ActionListener {
             if (peca != null && peca.getCor() == tabuleiroModel.getVez()) {
                 this.posicaoSelecionada = pos;
                 tabuleiroView.destacarCasa(linha, coluna);
+                
+                // pede pro Model os movimentos e marca na View
+                boolean[][] movimentos = peca.movimentosValidos(tabuleiroModel);
+                for (int l = 0; l < 8; l++) {
+                    for (int c = 0; c < 8; c++) {
+                        if (movimentos[l][c]) {
+                            if (tabuleiroModel.getPeca(l, c) == null) {
+                                tabuleiroView.marcaMovimentosValidos(l, c);
+                        }   }
+                    }
+                }
             } else {
                 System.out.println("Não é a sua vez ou casa vazia!");
             }
@@ -94,6 +105,7 @@ public class TabuleiroController implements ActionListener {
             if (posicaoSelecionada.getLinha() == linha && posicaoSelecionada.getColuna() == coluna) {
                 this.posicaoSelecionada = null;
                 tabuleiroView.limparDestaques();
+                tabuleiroView.desenharPecas(tabuleiroModel); // Restaura os icones originais
                 return;
             }
 
@@ -127,6 +139,7 @@ public class TabuleiroController implements ActionListener {
             this.posicaoSelecionada = null;
             if (!jogoAcabou) {
                 tabuleiroView.limparDestaques();
+                tabuleiroView.desenharPecas(tabuleiroModel); // Restaura os icones originais
             }
         }
     }

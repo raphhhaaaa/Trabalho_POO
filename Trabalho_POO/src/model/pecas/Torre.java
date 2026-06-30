@@ -26,6 +26,7 @@ public class Torre extends Peca {
                         && tabuleiro.caminhoLivre(getPosicao(), destino)
                         && podeMover(tabuleiro, linha, coluna)) {
                     matriz[linha][coluna] = true;
+
                 }
             }
         }

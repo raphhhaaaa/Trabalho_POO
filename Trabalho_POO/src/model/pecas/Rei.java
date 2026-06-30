@@ -27,6 +27,7 @@ public class Rei extends Peca {
                         && (diferencaLinha != 0 || diferencaColuna != 0)
                         && podeMover(tabuleiro, linha, coluna)) {
                     matriz[linha][coluna] = true;
+
                 }
             }
         }

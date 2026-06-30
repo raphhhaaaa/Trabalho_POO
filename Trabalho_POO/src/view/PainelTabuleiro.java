@@ -4,6 +4,7 @@ import controller.TabuleiroController;
 import dto.IconesDTO;
 import model.pecas.Peca;
 import model.Tabuleiro;
+import utils.ImageUtil;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,7 +12,7 @@ import java.awt.*;
 public class PainelTabuleiro extends JPanel {
 
     private IconesDTO iconesDTO = new IconesDTO();
-    private BotaoCasa[][] botoes = new BotaoCasa[8][8];
+    private static BotaoCasa[][] botoes = new BotaoCasa[8][8];
 
     public PainelTabuleiro() {
         setLayout(new GridLayout(8, 8));
@@ -77,7 +78,11 @@ public class PainelTabuleiro extends JPanel {
     }
 
     public void destacarCasa(int linha, int coluna) {
-        botoes[linha][coluna].setBackground(Color.lightGray);
+        botoes[linha][coluna].setBackground(new Color(144, 241, 95));
+    }
+
+    public void marcaMovimentosValidos(int linha, int coluna) {
+        botoes[linha][coluna].setIcon(ImageUtil.redimensionaImagem("/resources/dot.png", 32, 32));
     }
 
     public void destacarXequeMate(int linhaRei, int colunaRei, int linhaAtacante, int colunaAtacante) {
