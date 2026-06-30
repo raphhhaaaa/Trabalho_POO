@@ -52,7 +52,8 @@ public class MenuView extends JPanel {
         btnSair.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
         btnToggleMusica = new JButton();
-        btnToggleMusica.setIcon(ImageUtil.redimensionaImagem("/resources/icone-audio.png", 56, 56));
+        btnToggleMusica.setIcon(ImageUtil.redimensionaImagem("/resources/icone-audio-aberto.png", 64, 64));
+        btnToggleMusica.setPreferredSize(new Dimension(70, 70));
         btnToggleMusica.setOpaque(false);
         btnToggleMusica.setFocusPainted(false);
         btnToggleMusica.setBorderPainted(false);
@@ -103,7 +104,7 @@ public class MenuView extends JPanel {
         gbcMusica.gridy = 3;
         gbcMusica.anchor = GridBagConstraints.SOUTHEAST;
         gbcMusica.weighty = 1.0;
-        gbcMusica.insets = new Insets(0, 0, 20, 20);
+        gbcMusica.insets = new Insets(0, 0, 10, 0);
         this.add(btnToggleMusica, gbcMusica);
 
 
@@ -125,7 +126,7 @@ public class MenuView extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        // Desenha a imagem cobrindo toda a largura e altura do painel
+        // desenha a imagem cobrindo toda a largura e altura do painel
         if (imagemFundo != null) {
             g.drawImage(imagemFundo, 0, 0, this.getWidth(), this.getHeight(), this);
         }

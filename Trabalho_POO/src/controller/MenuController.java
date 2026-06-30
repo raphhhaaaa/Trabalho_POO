@@ -1,5 +1,7 @@
 package controller;
 
+import utils.AudioUtil;
+import utils.ImageUtil;
 import view.JanelaPrincipal;
 import view.MenuView;
 
@@ -8,6 +10,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.net.URI;
+import java.net.URL;
+import java.sql.SQLOutput;
 
 public class MenuController implements ActionListener {
     private MenuView menuView;
@@ -21,6 +26,7 @@ public class MenuController implements ActionListener {
         this.menuView.getBtnJogar().addActionListener(this);
         this.menuView.getBtnSair().addActionListener(this);
         this.janelaPrincipal.getBtnVoltarMenu().addActionListener(this);
+        this.menuView.getBtnToggleMusica().addActionListener(this);
 
         // mouselisteners
 
@@ -28,6 +34,7 @@ public class MenuController implements ActionListener {
             @Override
             public void mouseEntered(MouseEvent e) {
                 menuView.getBtnJogar().setSize(new Dimension(105, 45));
+                AudioUtil.tocarEfeitoSonoro("/resources/som-select-menu.wav");
             }
 
             @Override
@@ -40,6 +47,7 @@ public class MenuController implements ActionListener {
             @Override
             public void mouseEntered(MouseEvent e) {
                 menuView.getBtnSair().setSize(new Dimension(105, 45));
+                AudioUtil.tocarEfeitoSonoro("/resources/som-select-menu.wav");
             }
 
             @Override
@@ -47,6 +55,7 @@ public class MenuController implements ActionListener {
                 menuView.getBtnSair().setSize(new Dimension(100, 40));
             }
         });
+
     }
 
 
@@ -61,6 +70,17 @@ public class MenuController implements ActionListener {
             System.exit(0);
         } else if (e.getSource().equals(janelaPrincipal.getBtnVoltarMenu())) {
             janelaPrincipal.mostrarMenu();
+        } else if (e.getSource().equals(menuView.getBtnToggleMusica())) {
+            // logica de mutar e desmutar musica e alternar o icone
+            if (!AudioUtil.musicaTocando()) {
+                System.out.println("musica tocando");
+                AudioUtil.tocarMusica("/resources/Maarten-Schellekens-On-Cloud-Nine-_Jazz-Remix_.wav");
+                menuView.getBtnToggleMusica().setIcon(ImageUtil.redimensionaImagem("/resources/icone-audio-aberto.png", 64, 64));
+            } else {
+                System.out.println("musica nao tocando");
+                AudioUtil.pararMusica();
+                menuView.getBtnToggleMusica().setIcon(ImageUtil.redimensionaImagem("/resources/icone-audio-fechado.png", 64, 64));
+            }
         }
 
     }

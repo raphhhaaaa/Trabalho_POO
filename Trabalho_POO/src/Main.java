@@ -1,6 +1,7 @@
 import controller.MenuController;
 import controller.TabuleiroController;
 import model.Tabuleiro;
+import utils.AudioUtil;
 import view.JanelaPrincipal;
 import javax.swing.SwingUtilities;
 
@@ -18,6 +19,10 @@ public class Main {
 
             TabuleiroController controller = new TabuleiroController(tabuleiro, janela);
             MenuController menuController = new MenuController(janela.getPainelMenu(), janela);
+
+            // comeca tocando musica por padrao
+            AudioUtil.tocarMusica("/resources/Maarten-Schellekens-On-Cloud-Nine-_Jazz-Remix_.wav");
+
 
             janela.setVisible(true);
         });
