@@ -8,11 +8,8 @@ import java.io.File;
 
 public class AudioUtil {
 
-    private static Clip clip;
-
-    public AudioUtil(Clip clip) {
-        AudioUtil.clip = clip;
-    }
+    private static Clip clipMusica;
+    private static Clip clipEfeito;
 
     public AudioUtil() {}
 
@@ -29,10 +26,10 @@ public class AudioUtil {
 
             if (urlSom != null) {
                 AudioInputStream audioInput = AudioSystem.getAudioInputStream(urlSom);
-                clip = AudioSystem.getClip();
-                clip.open(audioInput);
-                clip.start(); // Inicia a reprodução
-                clip.loop(Clip.LOOP_CONTINUOUSLY);
+                clipMusica = AudioSystem.getClip();
+                clipMusica.open(audioInput);
+                clipMusica.start(); // Inicia a reprodução
+                clipMusica.loop(Clip.LOOP_CONTINUOUSLY);
             } else {
                 JOptionPane.showMessageDialog(null, "Arquivo não encontrado: " + caminhoArquivo);
             }
@@ -43,14 +40,14 @@ public class AudioUtil {
     }
 
     public static boolean musicaTocando() {
-        return clip != null && clip.isActive() && clip.isRunning();
+        return clipMusica != null && clipMusica.isActive() && clipMusica.isRunning();
     }
 
     public static void pararMusica() {
         // Verifique se o Clip foi instanciado e está tocando
-        if (clip != null && clip.isRunning()) {
-            clip.stop();  // Para a execução do áudio
-            clip.close(); // Libera os recursos do sistema
+        if (clipMusica != null && clipMusica.isRunning()) {
+            clipMusica.stop();  // Para a execução do áudio
+            clipMusica.close(); // Libera os recursos do sistema
         }
     }
 
@@ -67,9 +64,9 @@ public class AudioUtil {
 
             if (urlSom != null) {
                 AudioInputStream audioInput = AudioSystem.getAudioInputStream(urlSom);
-                clip = AudioSystem.getClip();
-                clip.open(audioInput);
-                clip.start(); // Inicia a reprodução
+                clipEfeito = AudioSystem.getClip();
+                clipEfeito.open(audioInput);
+                clipEfeito.start(); // Inicia a reprodução
             } else {
                 JOptionPane.showMessageDialog(null, "Arquivo não encontrado: " + caminhoArquivo);
             }
