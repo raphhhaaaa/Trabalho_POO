@@ -67,6 +67,9 @@ public class AudioUtil {
                 clipEfeito = AudioSystem.getClip();
                 clipEfeito.open(audioInput);
                 clipEfeito.start(); // Inicia a reprodução
+
+                // sem o loop
+
             } else {
                 JOptionPane.showMessageDialog(null, "Arquivo não encontrado: " + caminhoArquivo);
             }

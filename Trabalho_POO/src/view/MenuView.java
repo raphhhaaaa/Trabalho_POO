@@ -13,6 +13,7 @@ import java.io.IOException;
 
 public class MenuView extends JPanel {
     private JButton btnJogar;
+    private JButton btnJogarComIA;
     private JButton btnSair;
     private JButton btnToggleMusica;
     private Image imagemFundo;
@@ -34,14 +35,21 @@ public class MenuView extends JPanel {
 
         // instâncias e cfg dos elementos da tela //
 
-        btnJogar = new JButton("Jogar");
+        btnJogar = new JButton("Jogador vs Jogador");
         btnJogar.setFont(new Font("Arial", Font.BOLD, 15));
-        btnJogar.setPreferredSize(new Dimension(100, 40));
+        btnJogar.setPreferredSize(new Dimension(180, 40));
         btnJogar.setFocusPainted(false);
         btnJogar.setBorderPainted(false);
         btnJogar.setBackground(Color.lightGray);
         btnJogar.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
+        btnJogarComIA = new JButton("Jogador vs I.A");
+        btnJogarComIA.setFont(new Font("Arial", Font.BOLD, 15));
+        btnJogarComIA.setPreferredSize(new Dimension(180, 40));
+        btnJogarComIA.setFocusPainted(false);
+        btnJogarComIA.setBorderPainted(false);
+        btnJogarComIA.setBackground(Color.lightGray);
+        btnJogarComIA.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
         btnSair = new JButton("Sair");
         btnSair.setFont(new Font("Arial", Font.BOLD, 15));
@@ -89,14 +97,21 @@ public class MenuView extends JPanel {
         gbcBotao.gridx = 0;
         gbcBotao.gridy = 2;
         gbcBotao.anchor = GridBagConstraints.EAST;
-        gbcBotao.insets = new Insets(0, 0, 100, 95);
+        gbcBotao.insets = new Insets(0, 0, 100, 60);
         this.add(btnJogar, gbcBotao);
+
+        GridBagConstraints gbcBotaoIA = new GridBagConstraints();
+        gbcBotaoIA.gridx = 0;
+        gbcBotaoIA.gridy = 2;
+        gbcBotaoIA.anchor = GridBagConstraints.EAST;
+        gbcBotaoIA.insets = new Insets(0, 0, 0, 60);
+        this.add(btnJogarComIA, gbcBotaoIA);
 
         GridBagConstraints gbcBotaoSair = new GridBagConstraints();
         gbcBotaoSair.gridx = 0;
         gbcBotaoSair.gridy = 2;
         gbcBotaoSair.anchor = GridBagConstraints.EAST;
-        gbcBotaoSair.insets = new Insets(0, 0, 0, 95);
+        gbcBotaoSair.insets = new Insets(100, 0, 0, 95);
         this.add(btnSair, gbcBotaoSair);
 
         GridBagConstraints gbcMusica = new GridBagConstraints();
@@ -121,6 +136,10 @@ public class MenuView extends JPanel {
 
     public JButton getBtnToggleMusica() {
         return btnToggleMusica;
+    }
+
+    public JButton getBtnJogarComIA() {
+        return btnJogarComIA;
     }
 
     @Override

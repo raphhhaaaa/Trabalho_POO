@@ -23,7 +23,7 @@ public class PainelTabuleiro extends JPanel {
                 if ((linha + coluna) % 2 == 0) {
                     botao.setBackground(Color.DARK_GRAY);
                 } else {
-                    botao.setBackground(Color.WHITE);
+                    botao.setBackground(new Color(211, 206, 206));
                 }
                 botoes[linha][coluna] = botao;
                 add(botao);
@@ -95,7 +95,7 @@ public class PainelTabuleiro extends JPanel {
                 if ((l + c) % 2 == 0) {
                     botoes[l][c].setBackground(Color.DARK_GRAY);
                 } else {
-                    botoes[l][c].setBackground(Color.WHITE);
+                    botoes[l][c].setBackground(new Color(211, 206, 206));
                 }
             }
         }

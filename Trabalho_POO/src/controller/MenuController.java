@@ -30,29 +30,47 @@ public class MenuController implements ActionListener {
 
         // mouselisteners
 
+        // BOTAO JOGAR (JOGAGOR VS JOGADOR) //
         menuView.getBtnJogar().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
-                menuView.getBtnJogar().setSize(new Dimension(105, 45));
+                menuView.getBtnJogar().setSize(new Dimension(185, 45));
                 AudioUtil.tocarEfeitoSonoro("/resources/som-select-menu.wav");
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                menuView.getBtnJogar().setSize(new Dimension(100, 40));
+                menuView.getBtnJogar().setSize(new Dimension(180, 40));
             }
         });
 
+        // BOTAO JOGAR COM IA //
+        menuView.getBtnJogarComIA().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                menuView.getBtnJogarComIA().setSize(new Dimension(185, 45));
+                AudioUtil.tocarEfeitoSonoro("/resources/som-select-menu.wav");
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                menuView.getBtnJogarComIA().setSize(new Dimension(180, 40));
+            }
+        });
+
+        // BOTAO SAIR //
         menuView.getBtnSair().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
                 menuView.getBtnSair().setSize(new Dimension(105, 45));
                 AudioUtil.tocarEfeitoSonoro("/resources/som-select-menu.wav");
+                menuView.getBtnSair().setBackground(new Color(228, 77, 77, 255));
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
                 menuView.getBtnSair().setSize(new Dimension(100, 40));
+                menuView.getBtnSair().setBackground(Color.lightGray);
             }
         });
 
