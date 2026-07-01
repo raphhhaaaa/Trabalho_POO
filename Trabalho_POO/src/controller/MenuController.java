@@ -86,9 +86,12 @@ public class MenuController implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(menuView.getBtnJogar())) {
             // se foi o btn jogar que foi clicado, manda a view realizar a transição de tela
+            controllerTabuleiro.comecarJogoNormal();
             janelaPrincipal.mostrarTabuleiro();
             AudioUtil.tocarEfeitoSonoro("/resources/inicio.wav");
         } if (e.getSource().equals(menuView.getBtnJogarComIA())) {
+            controllerTabuleiro.comecarJogoComIA();
+            janelaPrincipal.mostrarTabuleiro();
             AudioUtil.tocarEfeitoSonoro("/resources/inicio.wav");
         } if (e.getSource().equals(menuView.getBtnSair())) {
             // se foi o btn jogar que foi clicado, manda o programa encerrar

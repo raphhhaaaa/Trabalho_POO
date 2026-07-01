@@ -5,8 +5,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.Random;
 
 import model.Cor;
+import model.Movimento;
 import model.Posicao;
 import model.Tabuleiro;
 import model.pecas.Peca;
@@ -26,6 +29,7 @@ public class TabuleiroController implements ActionListener {
     // memoria do clique
     private Posicao posicaoSelecionada = null;
     private boolean jogoAcabou = false;
+    private boolean modoIA = false;
 
     public TabuleiroController(Tabuleiro tabuleiroModel, JanelaPrincipal janelaPrincipal) {
         this.tabuleiroModel = tabuleiroModel;
@@ -71,15 +75,16 @@ public class TabuleiroController implements ActionListener {
             return; // se o jogo acabou, ignora os cliques
         }
 
+        if (modoIA && tabuleiroModel.getVez() == Cor.PRETA) {
+            return;
+        }
+
         // pega quem foi clicado
         BotaoCasa botaoClicado = (BotaoCasa) actionEvent.getSource();
 
         // pega linha e coluna do botao clicado
         int linha = botaoClicado.getLinha();
         int coluna = botaoClicado.getColuna();
-
-        // debug, remover depois
-        System.out.println("Clicaram na linha " + linha + " e coluna " + coluna);
 
         if (posicaoSelecionada == null) {
             Posicao pos = new Posicao(linha, coluna);
@@ -122,22 +127,10 @@ public class TabuleiroController implements ActionListener {
                 tabuleiroModel.mudaVez();
                 janelaPrincipal.atualizarLabelVez(tabuleiroModel.getVez());
 
-                if (tabuleiroModel.estaEmChequeMate(tabuleiroModel.getVez())) {
-                    Posicao posRei = tabuleiroModel.getPosicaoRei(tabuleiroModel.getVez());
-                    tabuleiroView.destacarXequeMate(posRei.getLinha(), posRei.getColuna(), posicaoBotaoClicado.getLinha(), posicaoBotaoClicado.getColuna());
+                verificarXeque(posicaoBotaoClicado);
 
-                    String vencedor = tabuleiroModel.getVez() == Cor.BRANCA ? "PRETAS" : "BRANCAS";
-                    
-                    boolean querJogarDeNovo = janelaPrincipal.perguntarJogarNovamente(vencedor);
-
-                    if (querJogarDeNovo) {
-                        reiniciarJogo();
-                        return; // sai do metodo para não resetar variáveis desnecessariamente
-                    } else {
-                        jogoAcabou = true; // trava o tabuleiro
-                    }
-                } else if (tabuleiroModel.estaEmCheque(tabuleiroModel.getVez())) {
-                    janelaPrincipal.exibirAvisoXeque();
+                if (!jogoAcabou && modoIA && tabuleiroModel.getVez() == Cor.PRETA) {
+                    jogarIA();
                 }
             }
 
@@ -157,6 +150,90 @@ public class TabuleiroController implements ActionListener {
         tabuleiroView.limparDestaques();
         tabuleiroView.desenharPecas(tabuleiroModel);
         janelaPrincipal.atualizarLabelVez(tabuleiroModel.getVez());
+    }
+
+    public void comecarJogoNormal() {
+        modoIA = false;
+        reiniciarJogo();
+    }
+
+    public void comecarJogoComIA() {
+        modoIA = true;
+        reiniciarJogo();
+    }
+
+    private void verificarXeque(Posicao posicaoAtacante) {
+        if (tabuleiroModel.estaEmChequeMate(tabuleiroModel.getVez())) {
+            Posicao posRei = tabuleiroModel.getPosicaoRei(tabuleiroModel.getVez());
+            tabuleiroView.destacarXequeMate(posRei.getLinha(), posRei.getColuna(), posicaoAtacante.getLinha(), posicaoAtacante.getColuna());
+
+            String vencedor = tabuleiroModel.getVez() == Cor.BRANCA ? "PRETAS" : "BRANCAS";
+
+            boolean querJogarDeNovo = janelaPrincipal.perguntarJogarNovamente(vencedor);
+
+            if (querJogarDeNovo) {
+                reiniciarJogo();
+            } else {
+                jogoAcabou = true; // trava o tabuleiro
+            }
+        } else if (tabuleiroModel.estaEmCheque(tabuleiroModel.getVez())) {
+            janelaPrincipal.exibirAvisoXeque();
+        }
+    }
+
+    private void jogarIA() {
+        ArrayList<Movimento> movimentos = movimentosValidosIA(true);
+        Random random = new Random();
+
+        if (movimentos.size() == 0) {
+            movimentos = movimentosValidosIA(false);
+        }
+
+        if (movimentos.size() == 0) {
+            jogoAcabou = true;
+            return;
+        }
+
+        Movimento movimento = movimentos.get(random.nextInt(movimentos.size()));
+        boolean moveu = tabuleiroModel.moverPeca(movimento.getOrigem(), movimento.getDestino());
+
+        if (moveu) {
+            AudioUtil.tocarEfeitoSonoro("/resources/movimento.wav");
+            tabuleiroView.desenharPecas(tabuleiroModel);
+            tabuleiroModel.mudaVez();
+            janelaPrincipal.atualizarLabelVez(tabuleiroModel.getVez());
+            verificarXeque(movimento.getDestino());
+        }
+    }
+
+    private ArrayList<Movimento> movimentosValidosIA(boolean precisaComer) {
+        ArrayList<Movimento> movimentos = new ArrayList<Movimento>();
+
+        for (int linha = 0; linha < 8; linha++) {
+            for (int coluna = 0; coluna < 8; coluna++) {
+                Peca peca = tabuleiroModel.getPeca(linha, coluna);
+                if (peca != null && peca.getCor() == Cor.PRETA) {
+                    boolean[][] matriz = peca.movimentosValidos(tabuleiroModel);
+                    for (int linhaDestino = 0; linhaDestino < 8; linhaDestino++) {
+                        for (int colunaDestino = 0; colunaDestino < 8; colunaDestino++) {
+                            if (matriz[linhaDestino][colunaDestino]) {
+                                Posicao origem = new Posicao(linha, coluna);
+                                Posicao destino = new Posicao(linhaDestino, colunaDestino);
+                                Peca pecaDestino = tabuleiroModel.getPeca(destino);
+                                boolean come = pecaDestino != null && pecaDestino.getCor() == Cor.BRANCA;
+
+                                if ((!precisaComer || come)
+                                        && tabuleiroModel.movimentoNaoDeixaReiEmCheque(origem, destino, Cor.PRETA)) {
+                                    movimentos.add(new Movimento(origem, destino));
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return movimentos;
     }
 
     public Posicao getPosicaoSelecionada() {

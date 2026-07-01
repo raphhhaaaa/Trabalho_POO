@@ -104,6 +104,23 @@ public class Tabuleiro {
         return false;
     }
 
+    public boolean movimentoNaoDeixaReiEmCheque(Posicao origem, Posicao destino, Cor cor) {
+        Peca peca = getPeca(origem);
+        Peca pecaCapturada = getPeca(destino);
+
+        casas[origem.getLinha()][origem.getColuna()].setPeca(null);
+        peca.setPosicao(destino);
+        casas[destino.getLinha()][destino.getColuna()].setPeca(peca);
+
+        boolean estaEmCheque = estaEmCheque(cor);
+
+        casas[origem.getLinha()][origem.getColuna()].setPeca(peca);
+        peca.setPosicao(origem);
+        casas[destino.getLinha()][destino.getColuna()].setPeca(pecaCapturada);
+
+        return !estaEmCheque;
+    }
+
     public boolean caminhoLivre(Posicao origem, Posicao destino) {
         int linhaAtual = origem.getLinha();
         int colunaAtual = origem.getColuna();
