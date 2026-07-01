@@ -10,6 +10,7 @@ import model.Cor;
 import model.Posicao;
 import model.Tabuleiro;
 import model.pecas.Peca;
+import utils.AudioUtil;
 import view.JanelaPrincipal;
 import view.PainelTabuleiro;
 import view.BotaoCasa;
@@ -94,7 +95,10 @@ public class TabuleiroController implements ActionListener {
                         if (movimentos[l][c]) {
                             if (tabuleiroModel.getPeca(l, c) == null) {
                                 tabuleiroView.marcaMovimentosValidos(l, c);
-                        }   }
+                            } else {
+                                tabuleiroView.marcaPecaParaEliminar(l, c);
+                            }
+                        }
                     }
                 }
             } else {
@@ -113,6 +117,7 @@ public class TabuleiroController implements ActionListener {
 
             boolean moveu = tabuleiroModel.moverPeca(posicaoSelecionada, posicaoBotaoClicado);
             if (moveu) {
+                AudioUtil.tocarEfeitoSonoro("/resources/movimento.wav");
                 tabuleiroView.desenharPecas(tabuleiroModel);
                 tabuleiroModel.mudaVez();
                 janelaPrincipal.atualizarLabelVez(tabuleiroModel.getVez());
@@ -156,5 +161,9 @@ public class TabuleiroController implements ActionListener {
 
     public Posicao getPosicaoSelecionada() {
         return posicaoSelecionada;
+    }
+
+    public Tabuleiro getTabuleiroModel() {
+        return tabuleiroModel;
     }
 }

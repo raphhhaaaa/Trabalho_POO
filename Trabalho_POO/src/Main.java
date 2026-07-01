@@ -18,7 +18,7 @@ public class Main {
             janela.getTabuleiro().desenharPecas(tabuleiro);
 
             TabuleiroController controller = new TabuleiroController(tabuleiro, janela);
-            MenuController menuController = new MenuController(janela.getPainelMenu(), janela);
+            MenuController menuController = new MenuController(janela.getPainelMenu(), janela, controller);
 
             // comeca tocando musica por padrao
             AudioUtil.tocarMusica("/resources/Maarten-Schellekens-On-Cloud-Nine-_Jazz-Remix_.wav");

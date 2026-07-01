@@ -1,5 +1,6 @@
 package controller;
 
+import model.Tabuleiro;
 import utils.AudioUtil;
 import utils.ImageUtil;
 import view.JanelaPrincipal;
@@ -17,13 +18,16 @@ import java.sql.SQLOutput;
 public class MenuController implements ActionListener {
     private MenuView menuView;
     private JanelaPrincipal janelaPrincipal;
+    private TabuleiroController controllerTabuleiro;
 
-    public MenuController(MenuView menuView, JanelaPrincipal janelaPrincipal) {
+    public MenuController(MenuView menuView, JanelaPrincipal janelaPrincipal, TabuleiroController controllerTabuleiro) {
         this.menuView = menuView;
         this.janelaPrincipal = janelaPrincipal;
+        this.controllerTabuleiro = controllerTabuleiro;
         
         // O controller captura o evento de clique dos botões
         this.menuView.getBtnJogar().addActionListener(this);
+        this.menuView.getBtnJogarComIA().addActionListener(this);
         this.menuView.getBtnSair().addActionListener(this);
         this.janelaPrincipal.getBtnVoltarMenu().addActionListener(this);
         this.menuView.getBtnToggleMusica().addActionListener(this);
@@ -83,12 +87,18 @@ public class MenuController implements ActionListener {
         if (e.getSource().equals(menuView.getBtnJogar())) {
             // se foi o btn jogar que foi clicado, manda a view realizar a transição de tela
             janelaPrincipal.mostrarTabuleiro();
-        } else if (e.getSource().equals(menuView.getBtnSair())) {
+            AudioUtil.tocarEfeitoSonoro("/resources/inicio.wav");
+        } if (e.getSource().equals(menuView.getBtnJogarComIA())) {
+            AudioUtil.tocarEfeitoSonoro("/resources/inicio.wav");
+        } if (e.getSource().equals(menuView.getBtnSair())) {
             // se foi o btn jogar que foi clicado, manda o programa encerrar
             System.exit(0);
-        } else if (e.getSource().equals(janelaPrincipal.getBtnVoltarMenu())) {
+        } if (e.getSource().equals(janelaPrincipal.getBtnVoltarMenu())) {
+            AudioUtil.tocarEfeitoSonoro("/resources/fim_.wav");
+            controllerTabuleiro.getTabuleiroModel().resetar(); // reseta matriz lógica do tabuleiro
+            janelaPrincipal.getTabuleiro().desenharPecas(controllerTabuleiro.getTabuleiroModel()); // manda re-desenhar com a matriz original/inicial
             janelaPrincipal.mostrarMenu();
-        } else if (e.getSource().equals(menuView.getBtnToggleMusica())) {
+        } if (e.getSource().equals(menuView.getBtnToggleMusica())) {
             // logica de mutar e desmutar musica e alternar o icone
             if (!AudioUtil.musicaTocando()) {
                 System.out.println("musica tocando");

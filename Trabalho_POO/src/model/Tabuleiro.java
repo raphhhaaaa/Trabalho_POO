@@ -16,6 +16,16 @@ public class Tabuleiro {
         colocarPecas();
     }
 
+    public void resetar() {
+        for (int linha = 0; linha < 8; linha++) {
+            for (int coluna = 0; coluna < 8; coluna++) {
+                casas[linha][coluna].setPeca(null);
+            }
+        }
+        colocarPecas();
+        vez = Cor.BRANCA;
+    }
+
     public void colocarPecas() {
         colocarPeca(new Torre(new Posicao(0, 0), Cor.PRETA));
         colocarPeca(new Cavalo(new Posicao(0, 1), Cor.PRETA));

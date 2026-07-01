@@ -12,7 +12,7 @@ import java.awt.*;
 public class PainelTabuleiro extends JPanel {
 
     private IconesDTO iconesDTO = new IconesDTO();
-    private static BotaoCasa[][] botoes = new BotaoCasa[8][8];
+    private BotaoCasa[][] botoes = new BotaoCasa[8][8];
 
     public PainelTabuleiro() {
         setLayout(new GridLayout(8, 8));
@@ -83,6 +83,10 @@ public class PainelTabuleiro extends JPanel {
 
     public void marcaMovimentosValidos(int linha, int coluna) {
         botoes[linha][coluna].setIcon(ImageUtil.redimensionaImagem("/resources/dot.png", 32, 32));
+    }
+
+    public void marcaPecaParaEliminar(int linha, int coluna) {
+        botoes[linha][coluna].setBackground(new Color(255, 102, 102));
     }
 
     public void destacarXequeMate(int linhaRei, int colunaRei, int linhaAtacante, int colunaAtacante) {
