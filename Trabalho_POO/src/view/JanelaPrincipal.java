@@ -8,7 +8,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.net.URL;
-import controller.TabuleiroController;
 import model.Cor;
 import view.BotaoCasa;
 import view.PainelTabuleiro;

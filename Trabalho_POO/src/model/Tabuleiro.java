@@ -175,6 +175,31 @@ public class Tabuleiro {
         return false;
     }
 
+    public boolean estaAfogado(Cor cor) {
+        if (estaEmCheque(cor)) {
+            return false;
+        }
+
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                Peca p = getPeca(i, j);
+                if (p != null && p.getCor() == cor) {
+                    boolean[][] movs = p.movimentosValidos(this);
+                    for (int linha = 0; linha < 8; linha++) {
+                        for (int coluna = 0; coluna < 8; coluna++) {
+                            if (movs[linha][coluna]) {
+                                if (movimentoNaoDeixaReiEmCheque(p.getPosicao(), new Posicao(linha, coluna), cor)) {
+                                    return false; // Achou pelo menos um movimento válido
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return true; // Rei não está em xeque, mas não tem movimentos
+    }
+
     public boolean estaEmChequeMate(Cor cor) {
         if (!estaEmCheque(cor)) {
             return false;

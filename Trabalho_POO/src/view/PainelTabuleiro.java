@@ -1,6 +1,5 @@
 package view;
 
-import controller.TabuleiroController;
 import dto.IconesDTO;
 import model.pecas.Peca;
 import model.Tabuleiro;

@@ -28,7 +28,11 @@ public class TabuleiroController implements ActionListener {
 
     // memoria do clique
     private Posicao posicaoSelecionada = null;
+
+    // jogo acontecendo ou nao
     private boolean jogoAcabou = false;
+
+    // jogando com IA ou não
     private boolean modoIA = false;
 
     public TabuleiroController(Tabuleiro tabuleiroModel, JanelaPrincipal janelaPrincipal) {
@@ -75,6 +79,7 @@ public class TabuleiroController implements ActionListener {
             return; // se o jogo acabou, ignora os cliques
         }
 
+        // se esta no modo IA e é vez das peças pretas (que a ia controla) não retorna nada (usuario não joga/nao mexe as peças)
         if (modoIA && tabuleiroModel.getVez() == Cor.PRETA) {
             return;
         }
@@ -130,7 +135,14 @@ public class TabuleiroController implements ActionListener {
                 verificarXeque(posicaoBotaoClicado);
 
                 if (!jogoAcabou && modoIA && tabuleiroModel.getVez() == Cor.PRETA) {
-                    jogarIA();
+                    Timer timer = new Timer(1000, new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent actionEvent) {
+                            jogarIA();
+                        }
+                    });
+                    timer.setRepeats(false);
+                    timer.start();
                 }
             }
 
@@ -178,6 +190,9 @@ public class TabuleiroController implements ActionListener {
             }
         } else if (tabuleiroModel.estaEmCheque(tabuleiroModel.getVez())) {
             janelaPrincipal.exibirAvisoXeque();
+        } else if (tabuleiroModel.estaAfogado(tabuleiroModel.getVez())) {
+            JOptionPane.showMessageDialog(janelaPrincipal, "Empate por Afogamento! Não há movimentos legais disponíveis.", "Fim de Jogo", JOptionPane.INFORMATION_MESSAGE);
+            jogoAcabou = true;
         }
     }
 
@@ -186,11 +201,14 @@ public class TabuleiroController implements ActionListener {
         Random random = new Random();
 
         if (movimentos.size() == 0) {
-            movimentos = movimentosValidosIA(false);
+            if (!jogoAcabou) {
+                movimentos = movimentosValidosIA(false);
+            } else {
+                return;
+            }
         }
-
+        
         if (movimentos.size() == 0) {
-            jogoAcabou = true;
             return;
         }
 
